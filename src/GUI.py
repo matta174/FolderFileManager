@@ -72,7 +72,9 @@ class FolderFileManager(tk.Frame):
         self.master.geometry("")
         self.master.resizable(False,False)
         self.master.iconbitmap(r"src\\images\\fileshepherd.ico")
-        
+        img = tk.PhotoImage(file = r"src\\images\\fileshepherd.ico")
+        # self.master.tk.call('wm', 'iconphoto', self.master._w, img)
+
 
         with open('config.json') as config_file:
             data = json.load(config_file)
