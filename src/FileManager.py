@@ -13,13 +13,12 @@ from watchdog.events import PatternMatchingEventHandler
 with open('config.json') as config_file:
     data = json.load(config_file)
 
-source_folders = data['source_folders']
-target_folders = data['target_folders']
+source_folder = data['source_folder']
 picture_folder = data['pictures_folder']
 music_folder = data['music_folder']
 
 class Utils(PatternMatchingEventHandler):
-    
+
     def on_any_event(self,event):
         print('anything' + str(event))
 
@@ -40,11 +39,14 @@ class Utils(PatternMatchingEventHandler):
 
     def on_created(self,event):
         src_path = event.src_path
-        # filename, file_extension = os.path.splitext(src_path)
+        
         full_filename = os.path.basename(src_path)
-        filename,file_extension= os.path.splitext(full_filename) # ntpath.basename(event.src_path)
+        filename,file_extension= os.path.splitext(full_filename) 
         new_full_filename = folder_destination + "/" + full_filename
 
+        image_dict = ['.img','.jpg','.jpeg','.png','.apng','.bmp','.gif','.ico','.cur','.jfif','.pjpeg','.pjp','.svg','.tif','.tiff','.webp']
+        sound_dict = ['.3gp','.aa','.aac','.aax','.act','.aiff','.alac','.amr','.ape','.au','.awb','.dct','.dss','.dvf','.flac','.gsm','.iklax','.ivs','.m4a','.m4b','.m4p','.mmf','.mp3','.mpc','.msv','.nmf','.nsf','.ogg','.oga','.mogg','.opus','.raw','.sln','.tta','.voc','.vox','.wav','.wma','.wv','.webm','.8svx']
+        document_dict = ['.doc','.docx','.xls','.xlsx','.pdf','.html','.txt','.pptx','.ppt','.pps','.odp']
         if (file_extension == '.txt'):
             try:
                 os.rename(src_path, new_full_filename)
@@ -56,17 +58,25 @@ class Utils(PatternMatchingEventHandler):
                 shutil.move(src_path,new_full_filename)
             except Exception as e: print(e)
 
-        elif (file_extension == '.jpg' or file_extension == '.png'):
+        elif (file_extension in image_dict):
             new_destination = picture_folder
             new_full_filename = picture_folder + '/' + full_filename
             try:
                 shutil.move(src_path,new_full_filename)
             except Exception as e: print(e)
         
+    # def on_modified(self,event):
+    #     for filename in os.listdir(folder_to_track):
+    #         src = folder_to_track + "/" + filename
+    #         new_destination = folder_destination + "/" + filename
+    #         try:
+    #             os.rename(src,new_destination)
+    #         except:
+    #             print('uh oh ')
+    
 
-
-folder_to_track = source_folders
-folder_destination = target_folders
+folder_to_track = source_folder
+folder_destination = ""
 
 event_handler = Utils()
 observer = Observer()

@@ -1,6 +1,1 @@
-{
-    "source_folders" : "C://temp",
-    "target_folders" : "C://temp2",
-    "pictures_folder" : "C://Users//matth//Pictures//Saved Pictures",
-    "music_folder" : "C://Users//matth//Music//music_downloads"
-}
+{"source_folder": "D:/temp1", "documents_folder": "D:/temp2/tempdoc", "pictures_folder": "D:/temp2/tempimages", "music_folder": "D:/temp2/tempmusic"}
